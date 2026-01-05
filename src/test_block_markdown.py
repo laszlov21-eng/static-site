@@ -1,6 +1,10 @@
 import unittest
-from block_markdown import markdown_to_blocks, block_to_block_type, BlockType, block_to_block_type
-from block_markdown import BlockType
+from block_markdown import (
+    markdown_to_blocks,
+    block_to_block_type,
+    BlockType,
+    extract_title,
+)
 
 
 class TestBlockMarkdown(unittest.TestCase):
@@ -59,6 +63,15 @@ This is a paragraph of text. It has some **bold** and *italic* words inside of i
         self.assertEqual(block_to_block_type(block), BlockType.ORDERED_LIST)
         block = "paragraph"
         self.assertEqual(block_to_block_type(block), BlockType.PARAGRAPH)
+
+    def test_extract_title(self):
+        markdown = """
+# This is a heading
+
+This is a paragraph of text. It has some **bold** and *italic* words inside of it.
+"""
+        title = extract_title(markdown)
+        self.assertEqual(title, "This is a heading")
 
 
 if __name__ == "__main__":
